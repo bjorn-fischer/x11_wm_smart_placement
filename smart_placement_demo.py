@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
+import sys
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GdkPixbuf
+from gi.repository import Gtk, Gdk
 import cairo
+
+gridSpec = (
+        '2,1',
+        '3,3,1',
+        '3,2,2')
 
 class Rect(object):
     __slots__ = ('x1', 'y1', 'x2', 'y2')
@@ -208,16 +214,17 @@ class RootWindow(Gtk.Window):
         self.add(self.root)
 
     def onKeyPress(self, widget, event):
+        if event.keyval == Gdk.KEY_q or event.keyval == Gdk.KEY_Escape:
+            Gtk.main_quit()
+            return
+
         if not self.drag:
             self.root.setGrid('')
             return
 
-        if event.keyval == 49:
-            self.root.setGrid('2,1')
-        elif event.keyval == 50:
-            self.root.setGrid('3,3,1')
-        elif event.keyval == 51:
-            self.root.setGrid('3,2,2')
+        num = event.keyval - Gdk.KEY_1
+        if num in range(len(gridSpec)):
+            self.root.setGrid(gridSpec[num])
         else:
             self.root.setGrid('')
 
@@ -261,6 +268,9 @@ class RootWindow(Gtk.Window):
         context.set_operator(cairo.OPERATOR_SOURCE)
         context.paint()
         context.set_operator(cairo.OPERATOR_OVER)
+
+if len(sys.argv) > 1:
+    gridSpec = sys.argv[1:]
 
 window = RootWindow()
 window.show_all()
