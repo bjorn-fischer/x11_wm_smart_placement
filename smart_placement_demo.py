@@ -11,6 +11,9 @@ gridSpec = (
         '3,3,1',
         '3,2,2')
 
+USE_NEIGHBOUR = False
+NEIGHBOUR_DIST = 30
+
 class Rect(object):
     __slots__ = ('x1', 'y1', 'x2', 'y2')
     def __init__(self, x1, y1, x2, y2):
@@ -40,9 +43,26 @@ class Grid:
                 self.rects.append(Rect(x1, y1, x2, y2))
 
     def getRect(self, x, y):
+        (x1, y1, x2, y2) = (-1, -1, -1, -1)
         for rect in self.rects:
             if rect.contains(x, y):
-                return (rect.x1, rect.y1, rect.x2, rect.y2)
+                (x1, y1, x2, y2) = (rect.x1, rect.y1, rect.x2, rect.y2)
+                if not USE_NEIGHBOUR:
+                    return (x1, y1, x2, y2)
+                break
+
+        if x1 >= 0:
+            for rect in self.rects:
+                if rect.contains(x - NEIGHBOUR_DIST, y):
+                    x1 = rect.x1
+                if rect.contains(x + NEIGHBOUR_DIST, y):
+                    x2 = rect.x2
+                if rect.contains(x, y - NEIGHBOUR_DIST):
+                    y1 = rect.y1
+                if rect.contains(x, y + NEIGHBOUR_DIST):
+                    y2 = rect.y2
+            return (x1, y1, x2, y2)
+
         return (-1, -1, -1, -1)
 
 class RootFrame(Gtk.Overlay):
