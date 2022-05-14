@@ -54,7 +54,7 @@ application window also snaps to adjacent combinations of grid elements.
     grid element(s), **drop** the window to stop the dragging mode,
     **release modifier key**. While not particularly short this sequence
     is interleaved between left and right hand, and should feel quite
-    naturally. The sequence should not be prolonged without proper
+    natural. The sequence should not be prolonged without proper
     necessity, though.
 
 * configurable run-time restrictions
