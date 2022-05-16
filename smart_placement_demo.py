@@ -79,7 +79,7 @@ class RootFrame(Gtk.Overlay):
         self.add(self.area)
 
         self.area.connect("draw", self.onDraw)
-        self.area.connect('configure-event', self.onConfigure)   
+        self.area.connect('configure-event', self.onConfigure)
 
     def init_surface(self, area):
         # Destroy previous buffer
@@ -92,23 +92,23 @@ class RootFrame(Gtk.Overlay):
                 area.get_allocated_width(),
                 area.get_allocated_height())
 
-    def redraw(self): 
+    def redraw(self):
         self.init_surface(self.area)
         ctx = cairo.Context(self.surface)
         ctx.set_source_rgba(0, 0, .6, .9)
 
         if self.spec != '':
-            self.drawGrid(ctx)        
+            self.drawGrid(ctx)
 
         self.surface.flush()
 
-    def onConfigure(self, area, event, data=None): 
+    def onConfigure(self, area, event, data=None):
         self.redraw()
         return False
 
     def onDraw(self, area, context):
         if self.surface is not None:
-            context.set_source_surface(self.surface, 0.0, 0.0)            
+            context.set_source_surface(self.surface, 0.0, 0.0)
             context.paint()
         else:
             print('Invalid surface')
@@ -161,7 +161,7 @@ class WindowFrame(Gtk.Bin):
         self.add(self.area)
 
         self.area.connect("draw", self.onDraw)
-        self.area.connect('configure-event', self.onConfigure)   
+        self.area.connect('configure-event', self.onConfigure)
 
     def init_surface(self, area):
         if self.surface is not None:
@@ -173,22 +173,22 @@ class WindowFrame(Gtk.Bin):
                 area.get_allocated_width(),
                 area.get_allocated_height())
 
-    def redraw(self): 
+    def redraw(self):
         self.init_surface(self.area)
         ctx = cairo.Context(self.surface)
         ctx.scale(self.surface.get_width(), self.surface.get_height())
-        ctx.rectangle(0, 0, 1, 1)       
+        ctx.rectangle(0, 0, 1, 1)
         ctx.set_source_rgba(.5, .5, .5, self.opacity)
-        ctx.fill()         
+        ctx.fill()
         self.surface.flush()
 
-    def onConfigure(self, area, event, data=None): 
+    def onConfigure(self, area, event, data=None):
         self.redraw()
         return False
 
     def onDraw(self, area, context):
         if self.surface is not None:
-            context.set_source_surface(self.surface, 0.0, 0.0)            
+            context.set_source_surface(self.surface, 0.0, 0.0)
             context.paint()
         else:
             print('Invalid surface')
@@ -199,7 +199,7 @@ class RootWindow(Gtk.Window):
         Gtk.Window.__init__(self)
         self.set_title("Window Manager Smart Placement Demo")
         self.set_default_size(1200, 800)
-        self.connect("destroy", Gtk.main_quit)    
+        self.connect("destroy", Gtk.main_quit)
         self.connect('draw', self.draw)
         self.drag = False
 
@@ -221,7 +221,7 @@ class RootWindow(Gtk.Window):
         self.set_app_paintable(True)
         self.show_all()
 
-        self.root = RootFrame()        
+        self.root = RootFrame()
         self.fixed = Gtk.Fixed()
         self.fixed.set_halign(Gtk.Align.START)
         self.fixed.set_valign(Gtk.Align.START)
