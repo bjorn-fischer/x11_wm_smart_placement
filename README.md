@@ -39,7 +39,7 @@ application window also snaps to adjacent combinations of grid elements.
 
 ## Design Considerations for Smart Placement
 
-* optional
+* Optional
 
     This is the most important requirement, which already is fulfilled
     by the demo app by using modifier keys during the dragging
@@ -47,17 +47,33 @@ application window also snaps to adjacent combinations of grid elements.
     should behave like prior to the implementation of smart placement. The
     principle of least astonishment should not be violated.
 
-* use short sequences
+* Use short sequences
 
     The normal operation is **start dragging** a window, **press** and
     hold a **modifier key**, let the window **snap** to the desired
     grid element(s), **drop** the window to stop the dragging mode,
     **release modifier key**. While not particularly short this sequence
     is interleaved between left and right hand, and should feel quite
-    naturally. The sequence should not be prolonged without proper
+    natural. The sequence should not be prolonged without proper
     necessity, though.
 
-* configurable run-time restrictions
+* Configurable run-time restrictions
 
-* simple to implement
+    Parameters for smart placement should be user-configurable. This
+    should cover the choice of the modifier keys as well as the grids
+    as such. Most important: Will a string representation of a grid
+    (like the one used in the demo) suffice or should free form grids
+    be possible, requiring some sort of grid editor in the preferences
+    dialog. How should such a grid editor work?
 
+* Handle resize limited windows
+
+    There are application windows that cannot be resized at all or
+    can be resized in steps only (e.g. xterm). This should be handled
+    somehow.
+
+* Simple to implement
+
+    As an implementation only is done once this should be the least
+    significant requirement. Though, if a slightly different feature set
+    would allow for a much less complex algorithm, it should be considered.
