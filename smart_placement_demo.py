@@ -11,7 +11,7 @@ gridSpec = (
         '3,3,1',
         '3,2,2')
 
-USE_NEIGHBOUR = False
+USE_NEIGHBOUR = True
 NEIGHBOUR_DIST = 30
 
 class Rect(object):
@@ -201,6 +201,7 @@ class RootWindow(Gtk.Window):
         self.set_default_size(1200, 800)
         self.connect("destroy", Gtk.main_quit)    
         self.connect('draw', self.draw)
+        self.drag = False
 
         self.set_events(
                 Gdk.EventMask.BUTTON_PRESS_MASK |
